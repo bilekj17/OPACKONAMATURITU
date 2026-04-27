@@ -32,7 +32,16 @@ public class Main {
             thread.start();
         }
 
+        //while (skladSurovin.getCelkem() < 1000) {
+        //    try {
+        //        Thread.sleep(100);
+        //    } catch (InterruptedException e) {
+        //        throw new RuntimeException(e);
+        //    }
+        //}
+
         for (Thread thread : threads) {
+            //thread.interrupt();
             try {
                 thread.join();
             } catch (InterruptedException e) {

@@ -8,7 +8,7 @@ public class Napojar extends Zamestnanec{
 
     @Override
     public void run() {
-        while (getSkladSurovin().getPocetLitruPiva() != 0) {
+        while (getSkladSurovin().getPocetLitruPiva() != 0 && !interrupted() && getSkladSurovin().getCelkem() < 1000) {
             //připravení nápoje kterého je aktuálně méně
             if (getSkladHotovychProduktu().getPocetLimonad() > getSkladHotovychProduktu().getPocetPiv() && getSkladHotovychProduktu().getPocetPiv() != 3) {
                 getSkladHotovychProduktu().pridejPivo(1);
@@ -30,6 +30,7 @@ public class Napojar extends Zamestnanec{
             if (getSkladHotovychProduktu().getPocetLimonad() == getSkladHotovychProduktu().getPocetPiv() && getSkladHotovychProduktu().getPocetPiv() != 3) {
                 getSkladHotovychProduktu().pridejPivo(1);
             }
+            spinkejHolatko(1000);
         }
     }
 

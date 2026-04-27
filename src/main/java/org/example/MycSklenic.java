@@ -8,11 +8,12 @@ public class MycSklenic extends Zamestnanec{
 
     @Override
     public void run(){
-        while(!interrupted()){
+        while(!interrupted() && getSkladSurovin().getCelkem() < 1000){
             getSkladSurovin().pridejCistySklenice(5);
             if (getSkladSurovin().getPocetCistychSklenic() > 30){
                 sleepy(1000);
             }
+            sleepy(1000);
         }
     }
 

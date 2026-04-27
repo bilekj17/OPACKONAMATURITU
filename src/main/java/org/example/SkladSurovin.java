@@ -13,6 +13,10 @@ public class SkladSurovin {
     private int pocetCistychSklenic = 20;
     private int spinavySklenice;
 
+    private int cenaPiva = 0;
+    private int cenaLimonady = 0;
+    private int cenaParkuVRohliku = 0;
+
     public synchronized boolean uberRohlik() {
         if (pocetRohliku > 0){
             pocetRohliku--;
@@ -36,6 +40,17 @@ public class SkladSurovin {
         log.info("Počet párků: {}, Počet rohlíků: {}", pocetParku, pocetRohliku);
     }
 
+    public synchronized void platbaZaPivo(int pocet){
+       cenaPiva += pocet * 40;
+    }
+
+    public synchronized void platbaZaLimonady(int pocet){
+        cenaLimonady += pocet * 25;
+    }
+
+    public synchronized void platbaZaParekVRohliku(int pocet){
+        cenaParkuVRohliku += pocet * 30;
+    }
 
     public synchronized boolean uberPivo() {
         if (pocetLitruPiva > 0.5){
@@ -66,6 +81,10 @@ public class SkladSurovin {
         pocetCistychSklenic += addCistychSklenic;
         spinavySklenice -= addCistychSklenic;
         log.info("Počet čistých sklenic: {}",pocetCistychSklenic);
+    }
+
+    public synchronized int getCelkem(){
+        return cenaPiva + cenaLimonady + cenaParkuVRohliku;
     }
 
 
@@ -107,5 +126,29 @@ public class SkladSurovin {
 
     public void setPocetCistychSklenic(int pocetCistychSklenic) {
         this.pocetCistychSklenic = pocetCistychSklenic;
+    }
+
+    public int getCenaPiva() {
+        return cenaPiva;
+    }
+
+    public void setCenaPiva(int cenaPiva) {
+        this.cenaPiva = cenaPiva;
+    }
+
+    public int getCenaLimonady() {
+        return cenaLimonady;
+    }
+
+    public void setCenaLimonady(int cenaLimonady) {
+        this.cenaLimonady = cenaLimonady;
+    }
+
+    public int getCenaParkuVRohliku() {
+        return cenaParkuVRohliku;
+    }
+
+    public void setCenaParkuVRohliku(int cenaParkuVRohliku) {
+        this.cenaParkuVRohliku = cenaParkuVRohliku;
     }
 }
