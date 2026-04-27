@@ -33,7 +33,7 @@ public class SkladSurovin {
         pocetRohliku += addParek;
         pocetParku += addRohlik;
 
-        log.info("Počet párků: {}",pocetParku+"Počet rohlíků: {}", pocetRohliku);
+        log.info("Počet párků: {}, Počet rohlíků: {}", pocetParku, pocetRohliku);
     }
 
 
@@ -57,7 +57,7 @@ public class SkladSurovin {
         if (pocetCistychSklenic > 0){
             pocetCistychSklenic--;
             spinavySklenice++;
-            log.info("Počet čistých sklenic: {}",pocetCistychSklenic);
+            log.info("Počet špinavých sklenic: {}",spinavySklenice);
         }
         return false;
     }

@@ -7,7 +7,10 @@ public class Parkovac extends Zamestnanec{
 
     @Override
     public void run(){
-        while(true){
+        while(!interrupted()){
+            if (getSkladSurovin().getPocetParku() > 0 && getSkladSurovin().getPocetRohliku() > 0){
+                getSkladHotovychProduktu().pridejParkuVRohliku(1);
+            }
             if (getSkladHotovychProduktu().getPocetParkuVRohliku() == 2){
                 mimimi(6000);
             }
@@ -22,7 +25,7 @@ public class Parkovac extends Zamestnanec{
         try{
             Thread.sleep(time);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
         }
     }
 }

@@ -8,19 +8,19 @@ public class Napojar extends Zamestnanec{
 
     @Override
     public void run() {
-        while (getSkladSurovin().getPocetLitruPiva() == 0) {
+        while (getSkladSurovin().getPocetLitruPiva() != 0) {
             //připravení nápoje kterého je aktuálně méně
             if (getSkladHotovychProduktu().getPocetLimonad() > getSkladHotovychProduktu().getPocetPiv() && getSkladHotovychProduktu().getPocetPiv() != 3) {
-                getSkladHotovychProduktu().pridejPivo();
+                getSkladHotovychProduktu().pridejPivo(1);
             }else if(getSkladHotovychProduktu().getPocetPiv() > getSkladHotovychProduktu().getPocetLimonad() && getSkladHotovychProduktu().getPocetLimonad() !=5){
-                getSkladHotovychProduktu().pridejLimonad();
+                getSkladHotovychProduktu().pridejLimonad(1);
             }
             //pokud je u nápoje dosažen maximální počet připravených kůsu připravuje se druhej
             if (getSkladHotovychProduktu().getPocetLimonad() == 5 && getSkladHotovychProduktu().getPocetPiv() != 3) {
-                getSkladHotovychProduktu().pridejPivo();
+                getSkladHotovychProduktu().pridejPivo(1);
             }
             if (getSkladHotovychProduktu().getPocetPiv() == 3 && getSkladHotovychProduktu().getPocetLimonad() != 5) {
-                getSkladHotovychProduktu().pridejLimonad();
+                getSkladHotovychProduktu().pridejLimonad(1);
             }
             //pokud jsou oba nápoje připravené v maximálním množství, nápojář čeká 1s
             if (getSkladHotovychProduktu().getPocetPiv() == 3 && getSkladHotovychProduktu().getPocetLimonad() == 5){
@@ -28,7 +28,7 @@ public class Napojar extends Zamestnanec{
             }
             //když se rovnají
             if (getSkladHotovychProduktu().getPocetLimonad() == getSkladHotovychProduktu().getPocetPiv() && getSkladHotovychProduktu().getPocetPiv() != 3) {
-                getSkladHotovychProduktu().pridejPivo();
+                getSkladHotovychProduktu().pridejPivo(1);
             }
         }
     }
@@ -37,7 +37,7 @@ public class Napojar extends Zamestnanec{
         try{
             Thread.sleep(time);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
         }
     }
 }
