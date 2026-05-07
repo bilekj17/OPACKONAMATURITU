@@ -4,11 +4,13 @@ public abstract class Zamestnanec extends Thread{
     private String jmeno;
     private SkladSurovin skladSurovin;
     private SkladHotovychProduktu skladHotovychProduktu;
+    private Control control;
 
-    public Zamestnanec(String jmeno, SkladSurovin skladSurovin, SkladHotovychProduktu skladHotovychProduktu) {
+    public Zamestnanec(String jmeno, SkladSurovin skladSurovin, SkladHotovychProduktu skladHotovychProduktu, Control control) {
         this.jmeno = jmeno;
         this.skladSurovin = skladSurovin;
         this.skladHotovychProduktu = skladHotovychProduktu;
+        this.control = control;
     }
 
     public SkladSurovin getSkladSurovin() {
@@ -33,5 +35,9 @@ public abstract class Zamestnanec extends Thread{
 
     public void setSkladHotovychProduktu(SkladHotovychProduktu skladHotovychProduktu) {
         this.skladHotovychProduktu = skladHotovychProduktu;
+    }
+
+    public Control getControl() {
+        return control;
     }
 }

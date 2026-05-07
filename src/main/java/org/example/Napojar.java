@@ -1,34 +1,47 @@
 package org.example;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Napojar extends Zamestnanec{
 
-    public Napojar(String jmeno, SkladSurovin skladSurovin, SkladHotovychProduktu skladHotovychProduktu) {
-        super(jmeno, skladSurovin, skladHotovychProduktu);
+    private static final Logger log = LoggerFactory.getLogger(Napojar.class);
+
+    private int pivLimit = 3;
+    private int limLimit = 5;
+
+    public Napojar(String jmeno, SkladSurovin skladSurovin, SkladHotovychProduktu skladHotovychProduktu, Control control) {
+        super(jmeno, skladSurovin, skladHotovychProduktu, control);
     }
+
 
     @Override
     public void run() {
-        while (getSkladSurovin().getPocetLitruPiva() != 0 && !interrupted() && getSkladSurovin().getCelkem() < 1000) {
-            //připravení nápoje kterého je aktuálně méně
-            if (getSkladHotovychProduktu().getPocetLimonad() > getSkladHotovychProduktu().getPocetPiv() && getSkladHotovychProduktu().getPocetPiv() != 3) {
-                getSkladHotovychProduktu().pridejPivo(1);
-            }else if(getSkladHotovychProduktu().getPocetPiv() > getSkladHotovychProduktu().getPocetLimonad() && getSkladHotovychProduktu().getPocetLimonad() !=5){
-                getSkladHotovychProduktu().pridejLimonad(1);
-            }
-            //pokud je u nápoje dosažen maximální počet připravených kůsu připravuje se druhej
-            if (getSkladHotovychProduktu().getPocetLimonad() == 5 && getSkladHotovychProduktu().getPocetPiv() != 3) {
-                getSkladHotovychProduktu().pridejPivo(1);
-            }
-            if (getSkladHotovychProduktu().getPocetPiv() == 3 && getSkladHotovychProduktu().getPocetLimonad() != 5) {
-                getSkladHotovychProduktu().pridejLimonad(1);
-            }
-            //pokud jsou oba nápoje připravené v maximálním množství, nápojář čeká 1s
-            if (getSkladHotovychProduktu().getPocetPiv() == 3 && getSkladHotovychProduktu().getPocetLimonad() == 5){
-                spinkejHolatko(1000);
-            }
-            //když se rovnají
-            if (getSkladHotovychProduktu().getPocetLimonad() == getSkladHotovychProduktu().getPocetPiv() && getSkladHotovychProduktu().getPocetPiv() != 3) {
-                getSkladHotovychProduktu().pridejPivo(1);
+        while (getSkladSurovin().getPocetLitruPiva() != 0 && !interrupted() && getSkladSurovin().getCelkem() < 1000 && getControl().running) {
+            int pivaCount = getSkladHotovychProduktu().getPocetPiv();
+            int limonadyCount = getSkladHotovychProduktu().getPocetLimonad();
+
+            if (pivaCount < pivLimit && limonadyCount < limLimit) {
+
+                // both can increase
+                if (pivaCount < limonadyCount) {
+                    getSkladHotovychProduktu().pridejPivo();
+                } else if (limonadyCount < pivaCount) {
+                    getSkladHotovychProduktu().pridejLimonad();
+                } else {
+                    // equal counts
+                    getSkladHotovychProduktu().pridejPivo(); // or getSkladHotovychProduktu().pridejLimonad(), your choice
+                }
+
+            } else if (pivaCount < pivLimit) {
+
+                // only A can increase
+                getSkladHotovychProduktu().pridejPivo();
+
+            } else if (limonadyCount < limLimit) {
+
+                // only B can increase
+                getSkladHotovychProduktu().pridejLimonad();
             }
             spinkejHolatko(1000);
         }

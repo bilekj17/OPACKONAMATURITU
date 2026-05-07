@@ -10,16 +10,17 @@ public class Main {
 
         SkladSurovin skladSurovin = new SkladSurovin();
         SkladHotovychProduktu skladHotovychProduktu = new SkladHotovychProduktu(skladSurovin);
+        Control control = new Control();
 
-        Napojar napojar1 = new Napojar("Bartender1", skladSurovin, skladHotovychProduktu);
-        Napojar napojar2 = new Napojar("Bartender2", skladSurovin, skladHotovychProduktu);
+        Napojar napojar1 = new Napojar("Bartender1", skladSurovin, skladHotovychProduktu, control);
+        Napojar napojar2 = new Napojar("Bartender2", skladSurovin, skladHotovychProduktu, control);
 
-        Parkovac parkovac = new Parkovac("Ms. Párkovač", skladSurovin, skladHotovychProduktu);
+        Parkovac parkovac = new Parkovac("Ms. Párkovač", skladSurovin, skladHotovychProduktu, control);
 
-        MycSklenic mycSklenic = new MycSklenic("Cleaner", skladSurovin, skladHotovychProduktu);
+        MycSklenic mycSklenic = new MycSklenic("Cleaner", skladSurovin, skladHotovychProduktu, control);
 
-        Cisnik cisnik1 = new Cisnik("Waiter1", skladSurovin, skladHotovychProduktu);
-        Cisnik cisnik2 = new Cisnik("Waiter2", skladSurovin, skladHotovychProduktu);
+        Cisnik cisnik1 = new Cisnik("Waiter1", skladSurovin, skladHotovychProduktu, control);
+        Cisnik cisnik2 = new Cisnik("Waiter2", skladSurovin, skladHotovychProduktu, control);
 
         threads.add(napojar1);
         threads.add(napojar2);

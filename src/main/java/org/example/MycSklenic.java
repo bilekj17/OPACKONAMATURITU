@@ -1,17 +1,26 @@
 package org.example;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MycSklenic extends Zamestnanec{
 
-    public MycSklenic(String jmeno, SkladSurovin skladSurovin, SkladHotovychProduktu skladHotovychProduktu) {
-        super(jmeno, skladSurovin, skladHotovychProduktu);
+    private static final Logger log = LoggerFactory.getLogger(MycSklenic.class);
+
+    public MycSklenic(String jmeno, SkladSurovin skladSurovin, SkladHotovychProduktu skladHotovychProduktu, Control control) {
+        super(jmeno, skladSurovin, skladHotovychProduktu, control);
     }
+
 
     @Override
     public void run(){
-        while(!interrupted() && getSkladSurovin().getCelkem() < 1000){
-            getSkladSurovin().pridejCistySklenice(5);
+        while(!interrupted() && getSkladSurovin().getCelkem() < 1000 && getControl().running){
+            if (getSkladSurovin().getSpinavySklenice() >= 5){
+                getSkladSurovin().pridejCistySklenice(5);
+            }
             if (getSkladSurovin().getPocetCistychSklenic() > 30){
                 sleepy(1000);
+                log.info("myč si šel odpočinout");
             }
             sleepy(1000);
         }

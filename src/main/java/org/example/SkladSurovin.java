@@ -11,7 +11,7 @@ public class SkladSurovin {
     private double pocetLitruPiva = 500;
     private double pocetLitruLimonady = 500;
     private int pocetCistychSklenic = 20;
-    private int spinavySklenice;
+    private int spinavySklenice = 20;
 
     private int cenaPiva = 0;
     private int cenaLimonady = 0;
@@ -36,7 +36,7 @@ public class SkladSurovin {
     public synchronized void pridejSurovinySObchodu(int addParek, int addRohlik){
         pocetRohliku += addParek;
         pocetParku += addRohlik;
-
+        log.info("nákup surovin byl úspěšný");
         log.info("Počet párků: {}, Počet rohlíků: {}", pocetParku, pocetRohliku);
     }
 
@@ -80,11 +80,19 @@ public class SkladSurovin {
     public synchronized void pridejCistySklenice(int addCistychSklenic) {
         pocetCistychSklenic += addCistychSklenic;
         spinavySklenice -= addCistychSklenic;
+        log.info("sklenice byli umyty");
         log.info("Počet čistých sklenic: {}",pocetCistychSklenic);
     }
 
     public synchronized int getCelkem(){
         return cenaPiva + cenaLimonady + cenaParkuVRohliku;
+    }
+
+    public synchronized int kradezPenez(){
+        cenaPiva = 0;
+        cenaLimonady = 0;
+        cenaParkuVRohliku = 0;
+        return 0;
     }
 
 
@@ -150,5 +158,9 @@ public class SkladSurovin {
 
     public void setCenaParkuVRohliku(int cenaParkuVRohliku) {
         this.cenaParkuVRohliku = cenaParkuVRohliku;
+    }
+
+    public int getSpinavySklenice() {
+        return spinavySklenice;
     }
 }

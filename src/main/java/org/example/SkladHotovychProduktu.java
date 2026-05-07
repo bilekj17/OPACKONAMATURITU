@@ -17,40 +17,55 @@ public class SkladHotovychProduktu {
         this.s = s;
     }
 
-    public synchronized void pridejPivo(int pocet){
-        if (pocetPiv + pocet >= 0){
+    public synchronized void pridejPivo(){
+        if (pocetPiv>= 0){
             if (pocetPiv < 3){
-                pocetPiv += pocet;
+                pocetPiv++;
                 s.uberPivo();
                 s.uberCistySklenice();
+                log.info("bylo připraveno jedno pivo");
             }else{
-                log.warn("Zvětralé pivo nikdo nechce je to moc: "+pocetPiv);
+                log.warn("počet piv je příliš velký: "+pocetPiv);
             }
         }
     }
 
-    public synchronized void pridejLimonad(int pocet){
-        if (pocetLimonad + pocet >= 0){
+    public synchronized void uberPivo(int pocet){
+        pocetPiv -= pocet;
+    }
+
+    public synchronized void pridejLimonad(){
+        if (pocetLimonad>= 0){
             if (pocetLimonad < 5){
-                pocetLimonad += pocet;
+                pocetLimonad++;
                 s.uberLimonady();
                 s.uberCistySklenice();
+                log.info("byla připravena jedna limonáda");
             }else{
-                log.warn("ani vyčpělá limonáda by nebyla top");
+                log.warn("počet limonád je příliš velký: "+pocetLimonad);
             }
         }
     }
 
-    public synchronized void pridejParkuVRohliku(int pocet){
-        if (pocetParkuVRohliku + pocet >= 0){
+    public synchronized void uberLimonadu(int pocet){
+        pocetLimonad -= pocet;
+    }
+
+    public synchronized void pridejParkuVRohliku(){
+        if (pocetParkuVRohliku >= 0){
             if (pocetParkuVRohliku < 2){
-                pocetParkuVRohliku += pocet;
+                pocetParkuVRohliku++;
                 s.uberParek();
                 s.uberRohlik();
+                log.info("párek v rohlíku byl vyroben");
             }else{
-                log.warn("moc rozblemcají se");
+                log.warn("počet párků v rohlíku je příliš velký: "+pocetParkuVRohliku);
             }
         }
+    }
+
+    public synchronized void uberParekVRohliku(int pocet){
+        pocetParkuVRohliku -= pocet;
     }
 
     public int getPocetPiv() {
